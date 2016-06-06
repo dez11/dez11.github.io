@@ -1,55 +1,74 @@
-var $ = require('jquery'),
-    template = require('lodash.template');
+var $ = require("jquery");
 
-var compiled = template(require('./views/brightcove-embed-code.html')),
-    config = {
-      account: '1752604059001',
-      player: '52d490a5-eef6-4e2e-a39f-d9c4b212d45f',
-      embed: 'default'
-    },
-    markup = compiled(config);
+$(function(){
+  var w = $(window).width() - $(".square").width(),
+      h = $(window).height() - $(".square").height();
 
-var importScript = (src) => {
-  var deferred = new $.Deferred(),
-      js = document.createElement('script');
+  // animate処理
+  $(".square").animate({"left": w},1500)
+  .animate({"top": h},1500)
+  .animate({"left": 0}, 1500)
+  .animate({"top": 0}, 1500);
 
-  js.type = "text\/javascript"
-  js.src = src
-  js.onload = (evt) => deferred.resolve(evt)
-  js.onerror = (evt) => deferred.reject(evt)
-  document.getElementsByTagName('body')[0].appendChild(js)
-  return deferred
-}
-
-// +++++++++++++++++++++++++++++++++++
-// メイン処理
-// +++++++++++++++++++++++++++++++++++
-// プレイヤーをHTMLに書き出す
-$('#player').html(markup);
-
-// brightcoveのjsを読み込む
-importScript('//players.brightcove.net/1752604059001/52d490a5-eef6-4e2e-a39f-d9c4b212d45f_default/index.min.js').then((evt) => {
-
-  // 読み込みが成功した場合
-  videojs('myPlayerID').ready(function () {
-    var myPlayer = this,
-        theDiv = $('#insertionPoint');
-
-    // 各イベントのログ出力
-    myPlayer.on('loadeddata', () => {
-      theDiv.append('loadeddata<br>');
-    });
-    myPlayer.on('loadedmetadata', () => {
-      theDiv.append('loadedmetadata<br>');
-    });
-    myPlayer.on('loadstart', () => {
-      theDiv.append('loadstart<br>');
-    });
-    myPlayer.on('playing', () => {
-      theDiv.append('playing<br>');
-    });
-  });
-}, (evt) => {
-  // 読み込みが失敗した場合
-  console.log('Error')
+  // Deferred処理
+//  function moveAnime(object, color) {
+//    console.log(`moveAnime ${color}`);
+//    $(object).css("background", color);
+//  }
+//
+//  new $.Deferred().resolve().promise().then(()=>{
+//    console.log(1);
+//    var d = new $.Deferred();
+//    $(".square").animate({
+//      "left": w
+//    },{
+//      duration: 1000,
+//      complete: ()=> {
+//        moveAnime(".square", "#f00");
+//        d.resolve();
+//      }
+//    });
+//    return d.promise();
+//  }).then(()=>{
+//    console.log(2);
+//    var d = new $.Deferred();
+//    $(".square").animate({
+//      "top": h
+//    },{
+//      duration: 1000,
+//      complete: ()=> {
+//        moveAnime(".square", "#0f0");
+//        d.resolve();
+//      }
+//    });
+//    return d.promise();
+//  }).then(()=>{
+//    console.log(3);
+//    var d = new $.Deferred();
+//    $(".square").animate({
+//      "left": 0
+//    },{
+//      duration: 1000,
+//      complete: ()=> {
+//        moveAnime(".square", "#00f");
+//        d.resolve();
+//      }
+//    });
+//    return d.promise();
+//  }).then(()=>{
+//    console.log(4);
+//    var d = new $.Deferred();
+//    $(".square").animate({
+//      "top": 0
+//    },{
+//      duration: 1000,
+//      complete: ()=> {
+//        moveAnime(".square", "#a3d4f8");
+//        d.resolve();
+//      }
+//    });
+//    return d.promise();
+//  }, ()=>{
+//    console.log("error");
+//  });
 });

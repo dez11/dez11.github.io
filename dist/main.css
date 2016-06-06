@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+/* ページレイアウト */
+* {
+  box-sizing: border-box;
+  color: #000;
+  font-family: 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* アニメーション */
+.square {
+  width: 100px;
+  height: 100px;
+  background: #a3d4f8;
+  position: absolute;
+}
